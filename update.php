@@ -27,7 +27,7 @@ if (isset($_POST['update'])) {
 
   if ($con->updateUser($id, $firstname, $lastname, $birthday, $sex)) {
     if ($con->updateUserAddress($id, $street, $barangay, $city, $province)) {
-      header('location:index.php?status=success');
+      header('location:index.php?status=update');
       exit();
     } else {
       $error = "Error occured while updating user address. Please try again.";

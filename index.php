@@ -3,6 +3,10 @@ require_once('classes/database.php');
 $con = new database();
 session_start();
 
+if (!isset($_SESSION['username']) || $_SESSION['account_type'] != 0 ) {
+    header('location:login.php');
+}
+
 if (isset($_POST['delete'])) {
     $id = $_POST['id'];
     if ($con->delete($id)) {
@@ -11,6 +15,7 @@ if (isset($_POST['delete'])) {
         echo "Something went wrong.";
     }
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -45,6 +50,7 @@ if (isset($_POST['delete'])) {
           <th>Birthday</th>
           <th>Sex</th>
           <th>Username</th>
+          <th>Email</th>
           <th>Address</th>
           <th>Actions</th>
         </tr>
@@ -71,6 +77,7 @@ if (isset($_POST['delete'])) {
           <td><?php echo $row['user_birthday']; ?></td>
           <td><?php echo $row['user_sex']; ?></td>
           <td><?php echo $row['user_name']; ?></td>
+          <td><?php echo $row['user_email']; ?></td>
           <td><?php echo $row['address']; ?></td>
           <td>
         <!-- Delete button -->
@@ -117,6 +124,16 @@ document.addEventListener('DOMContentLoaded', function() {
       case 'success':
         title = 'Success!';
         text = 'Record is successfully deleted.';
+        icon = 'success';
+        break;
+      case 'update':
+        title = 'Success!';
+        text = 'Record is successfully updated.';
+        icon = 'success';
+        break;
+      case 'login':
+        title = 'Success!';
+        text = 'You are already logged in.';
         icon = 'success';
         break;
       case 'error':
